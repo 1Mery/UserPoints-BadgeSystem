@@ -1,12 +1,10 @@
 package demo.userservice.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
@@ -15,14 +13,21 @@ import java.util.UUID;
 @Setter
 public class UserEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
+    private UUID userId;
 
-    UUID userId;
+    @Column(name = "name", nullable = false)
+    private String userName;
 
-    @Column(name = "name",nullable = false)
-    String userName;
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
 
-    @Column(name = "email",nullable = false)
-    String email;
+    @Column(name = "total_points", nullable = false)
+    private int totalPoints = 0; // Varsayılan 0
+
+    @Column(name = "total_budget", nullable = false)
+    private BigDecimal totalBudget = BigDecimal.ZERO; // Varsayılan 0 para
 
     //getter ve setter lombok ile
 }

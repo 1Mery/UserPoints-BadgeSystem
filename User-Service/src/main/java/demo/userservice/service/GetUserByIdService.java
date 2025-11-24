@@ -21,7 +21,7 @@ public class GetUserByIdService {
 
     public UserResponse getById(UUID id){
         UserEntity entity=repository.findById(id).
-                orElseThrow(() -> new IllegalArgumentException("User not found"));
+                orElseThrow(() -> new RuntimeException("User not found"));
 
         return mapper.toResponse(entity);
     }

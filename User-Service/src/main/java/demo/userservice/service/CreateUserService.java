@@ -7,8 +7,6 @@ import demo.userservice.mapper.UserMapper;
 import demo.userservice.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 public class CreateUserService {
 
@@ -21,23 +19,18 @@ public class CreateUserService {
     }
 
     public UserResponse createUser(CreateUserRequest request){
-        String userName= request.userName();
-        String email=request.email();
-
-        if (userName==null|| userName.isBlank()){
+        if (request.userName()==null|| request.userName().isBlank()){
             throw new IllegalArgumentException("Name cannot be emty");
         }
 
-        if (email==null|| email.isBlank()){
+        if (request.email()==null|| request.email().isBlank()){
             throw new IllegalArgumentException("Email cannot be emty");
         }
 
         UserEntity user=new UserEntity();
-        UUID id=UUID.randomUUID();
 
-        user.setUserId(id);
-        user.setUserName(userName);
-        user.setEmail(email);
+        user.setUserName(request.userName());
+        user.setEmail(request.email());
 
         UserEntity saved = repository.save(user);
 

@@ -1,7 +1,9 @@
 package demo.userservice.controller;
 
+import demo.userservice.dto.AddPointsRequest;
 import demo.userservice.dto.CreateUserRequest;
 import demo.userservice.dto.UserResponse;
+import demo.userservice.service.AddPointsService;
 import demo.userservice.service.CreateUserService;
 import demo.userservice.service.GetUserByIdService;
 import org.springframework.http.HttpStatus;
@@ -15,10 +17,14 @@ public class UserController {
 
     private final CreateUserService createUserService;
     private final GetUserByIdService getUserByIdService;
+    private final AddPointsService addPointsService;
 
-    public UserController(CreateUserService createUserService, GetUserByIdService getUserByIdService) {
+    public UserController(CreateUserService createUserService,
+                          GetUserByIdService getUserByIdService,
+                          AddPointsService addPointsService) {
         this.createUserService = createUserService;
         this.getUserByIdService = getUserByIdService;
+        this.addPointsService = addPointsService;
     }
 
     @PostMapping
@@ -32,4 +38,9 @@ public class UserController {
         return getUserByIdService.getById(id);
     }
 
+    @PostMapping("/{id}/add-points")
+    public UserResponse addPoints(@PathVariable UUID id,
+                                  @RequestBody AddPointsRequest request) {
+        return addPointsService.addPoints(id, request);
+    }
 }
