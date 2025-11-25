@@ -11,7 +11,9 @@ public class UserMapper {
         return new UserResponse(
                 entity.getUserId(),
                 entity.getUserName(),
-                entity.getEmail()
+                entity.getEmail(),
+                entity.getTotalPoints(),
+                entity.getTotalBudget()
         );
     }
 }

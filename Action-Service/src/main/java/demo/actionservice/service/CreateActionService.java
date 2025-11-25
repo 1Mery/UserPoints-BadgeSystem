@@ -1,24 +1,25 @@
 package demo.actionservice.service;
 
+import demo.actionservice.client.UserClient;
+import demo.actionservice.client.dto.AddPointsRequest;
 import demo.actionservice.dto.ActionResponse;
 import demo.actionservice.dto.CreateActionRequest;
 import demo.actionservice.entity.ActionEntity;
-import demo.actionservice.entity.ActionType;
 import demo.actionservice.mapper.ActionMapper;
 import demo.actionservice.repository.ActionRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 public class CreateActionService {
 
     private final ActionRepository repository;
     private final ActionMapper mapper;
+    private final UserClient client;
 
-    public CreateActionService(ActionRepository repository, ActionMapper mapper) {
+    public CreateActionService(ActionRepository repository, ActionMapper mapper, UserClient client) {
         this.repository = repository;
         this.mapper = mapper;
+        this.client = client;
     }
 
     public ActionResponse createAction(CreateActionRequest request){
@@ -39,6 +40,10 @@ public class CreateActionService {
         entity.setPoints(points);
 
         repository.save(entity);
+
+        // Feign ile User-Service puan ekliyoruz
+        AddPointsRequest addPointsRequest= new AddPointsRequest(points);
+        client.addPoints(request.userId(),addPointsRequest);
 
         return mapper.toResponse(entity);
 
