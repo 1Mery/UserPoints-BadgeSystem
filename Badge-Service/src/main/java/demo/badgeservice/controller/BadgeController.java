@@ -29,6 +29,7 @@ public class BadgeController {
         return createBadgeService.createBadge(request);
     }
 
+    //rozet listesi dönüyor
     @GetMapping("/user/{userId}")
     public List<BadgeResponse> getByUser(@PathVariable UUID userId) {
         return getBadgesByUserIdService.getByUserId(userId);

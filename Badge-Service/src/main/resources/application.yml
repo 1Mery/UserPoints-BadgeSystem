@@ -12,11 +12,18 @@ spring:
           destination: action-events
           group: badge-service
           content-type: application/json
+          consumer:
+            maxAttempts: 1   # Hata olursa tekrar denemesin -> direk DLQ
+
 
       kafka:
+        bindings:
+          actionCreatedConsumer-in-0:
+            consumer:
+              enableDlq: true   #Dead Letter Queue , service çökmesini engelliyor ayr? bir topice kaydediyor
+              dlqName: action-events-dlq
         binder:
           brokers: localhost:9094
-          autoCreateTopics: true
 
   datasource:
     url: jdbc:postgresql://localhost:5435/badge_service_db
