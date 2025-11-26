@@ -2,8 +2,19 @@ spring:
   application:
     name: Action-Service
 
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9094
+      bindings:
+        actionEvents-out-0:  #ç?k?? kanal?
+          destination: action-events    #Kafka topic ad?
+          content-type: application/json
+
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/action_service_db
+    url: jdbc:postgresql://localhost:5434/action_service_db
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver

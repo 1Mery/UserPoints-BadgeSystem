@@ -1,9 +1,25 @@
 spring:
   application:
-    name: Badge-Service
+    name: badge-service
+
+  cloud:
+    function:
+      definition: actionCreatedConsumer
+
+    stream:
+      bindings:
+        actionCreatedConsumer-in-0:
+          destination: action-events
+          group: badge-service
+          content-type: application/json
+
+      kafka:
+        binder:
+          brokers: localhost:9094
+          autoCreateTopics: true
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/badge_service_db
+    url: jdbc:postgresql://localhost:5435/badge_service_db
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -15,5 +31,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
 server:
   port: 8082
