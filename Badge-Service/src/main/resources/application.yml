@@ -7,6 +7,7 @@ spring:
       definition: actionCreatedConsumer
 
     stream:
+      defaultBinder: kafka
       bindings:
         actionCreatedConsumer-in-0:
           destination: action-events
@@ -20,7 +21,7 @@ spring:
         bindings:
           actionCreatedConsumer-in-0:
             consumer:
-              enableDlq: true   #Dead Letter Queue , service çökmesini engelliyor ayr? bir topice kaydediyor
+              enableDlq: true   #Dead Letter Queue , service ï¿½ï¿½kmesini engelliyor ayr? bir topice kaydediyor
               dlqName: action-events-dlq
         binder:
           brokers: localhost:9094

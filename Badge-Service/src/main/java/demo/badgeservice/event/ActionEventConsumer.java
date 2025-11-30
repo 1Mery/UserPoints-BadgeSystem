@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
-public class ActionEventConfig {
+public class ActionEventConsumer {
 
     private final UserClient userClient;
     private final BadgeService badgeService;
