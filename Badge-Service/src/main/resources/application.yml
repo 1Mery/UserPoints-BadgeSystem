@@ -24,7 +24,7 @@ spring:
               enableDlq: true   #Dead Letter Queue , service ��kmesini engelliyor ayr? bir topice kaydediyor
               dlqName: action-events-dlq
         binder:
-          brokers: localhost:9094
+          brokers: localhost:9092
 
   datasource:
     url: jdbc:postgresql://localhost:5435/badge_service_db

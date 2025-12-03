@@ -2,6 +2,17 @@ spring:
   application:
     name: User-Service
 
+  cloud:
+    stream:
+      defaultBinder: kafka
+      bindings:
+        actionEvents-out-0:
+          destination: action-events
+          content-type: application/json
+      kafka:
+        binder:
+          brokers: localhost:9092
+
   datasource:
     url: jdbc:postgresql://localhost:5433/user_service_db
     username: postgres

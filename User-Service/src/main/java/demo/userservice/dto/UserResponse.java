@@ -7,5 +7,7 @@ public record UserResponse(UUID id,
                            String userName,
                            String email,
                            int totalPoints,
-                           BigDecimal totalBudget) {
+                           BigDecimal totalBudget,
+                           BadgeResponse badge
+) {
 }

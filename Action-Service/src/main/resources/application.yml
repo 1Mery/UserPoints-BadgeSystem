@@ -6,9 +6,9 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: localhost:9094
+          brokers: localhost:9092
       bindings:
-        actionEvents-out-0:  #ç?k?? kanal?
+        actionEvents-out-0:
           destination: action-events    #Kafka topic ad?
           content-type: application/json
 

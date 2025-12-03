@@ -12,8 +12,10 @@ import demo.actionservice.kafka.outbox.ActionOutboxRepository;
 import demo.actionservice.mapper.ActionMapper;
 import demo.actionservice.repository.ActionRepository;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class CreateActionService {
 
@@ -61,6 +63,15 @@ public class CreateActionService {
                 entity.getActionType().name(),
                 entity.getPoints()
         );
+
+        try {
+            // user-service'e puanı ekle (senkron)
+            AddPointsRequest addReq = new AddPointsRequest(entity.getPoints());
+            client.addPoints(entity.getUserId(), addReq);
+        } catch (Exception e) {
+            log.error("Failed to add points to user {} before publishing event", entity.getUserId(), e);
+            throw new IllegalStateException("Cannot add points to user", e);
+        }
 
         try {
             // 3) Event'i JSON'a çevir

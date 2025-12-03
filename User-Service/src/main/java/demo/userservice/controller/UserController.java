@@ -1,20 +1,20 @@
 package demo.userservice.controller;
 
 import demo.userservice.client.BadgeClient;
-import demo.userservice.dto.AddPointsRequest;
-import demo.userservice.dto.BadgeResponse;
-import demo.userservice.dto.CreateUserRequest;
-import demo.userservice.dto.UserResponse;
+import demo.userservice.dto.*;
 import demo.userservice.service.AddPointsService;
 import demo.userservice.service.CreateUserService;
 import demo.userservice.service.GetTotalPointsService;
 import demo.userservice.service.GetUserByIdService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @RestController
 @RequestMapping("api/v1/users")
 public class UserController {
@@ -59,6 +59,13 @@ public class UserController {
     public List<BadgeResponse> getUserBadges(@PathVariable UUID userId) {
         return badgeClient.getBadgesByUserId(userId);
     }
+
+    @PostMapping("/{userId}/badge-updated")
+    public ResponseEntity<Void> badgeUpdated(@PathVariable UUID userId, @RequestBody BadgeNotificationRequest req) {
+        log.info("Notification received for user {}: badge={}, message={}", userId, req.badgeType(), req.message());
+        return ResponseEntity.ok().build();
+    }
+
 
 
 }
