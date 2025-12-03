@@ -65,7 +65,7 @@ else                  BRONZE;
 <h2>🛠 Kullanılan Teknolojiler</h2>
 
 <ul>
-  <li>Java 17</li>
+  <li>Java 21</li>
   <li>Spring Boot</li>
   <li>Spring Cloud Stream (Kafka)</li>
   <li>Feign Client</li>
