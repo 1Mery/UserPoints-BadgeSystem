@@ -1,74 +1,76 @@
-🧩 User Points & Badge System
+<h1 align="center">🧩 User Points & Badge System</h1>
+<p align="center"><i>Kullanıcı puan & rozet yönetimi — Event-Driven Mikroservis Mimarisi</i></p>
 
-Kullanıcı puan & rozet yönetimi – Mikroservis Mimarisi
+<br/>
 
-Bu proje, kullanıcıların yaptığı aksiyonlara göre puan kazandığı ve puanlara göre otomatik rozet aldığı bir mikroservis yapısıdır. Sistem tamamen event-driven çalışır ve Kafka ile haberleşir.
+<h2>🚀 Mimari Özeti</h2>
 
-🚀 Mimari Özeti
+<ul>
+  <li><b>🟦 User-Service </b>
+    <ul>
+      <li>Kullanıcı oluşturma</li>
+      <li>Puan ekleme</li>
+      <li>Profil bilgisini <b>rozet ile birlikte</b> döndürme</li>
+      <li>Badge-Service ile Feign üzerinden iletişim</li>
+    </ul>
+  </li>
 
-🟦 User-Service 
+  <li><b>🟨 Action-Service </b>
+    <ul>
+      <li>Kullanıcı aksiyonlarını toplama</li>
+      <li>Kullanıcıya puan ekleme</li>
+      <li><b>Transactional Outbox Pattern</b> ile Kafka’ya event gönderme</li>
+    </ul>
+  </li>
 
-Kullanıcı oluşturma
+  <li><b>🟪 Badge-Service </b>
+    <ul>
+      <li>Kafka <code>action-events</code> tüketme</li>
+      <li>Kullanıcının toplam puanını User-Service üzerinden çekme</li>
+      <li>Puan eşiklerine göre doğru rozeti hesaplama</li>
+      <li>Eski rozetleri silip yeni rozeti kaydetme</li>
+      <li>User-Service’e “badge updated” bildirimi gönderme</li>
+    </ul>
+  </li>
+</ul>
 
-Puan ekleme
+<br/>
 
-Profil bilgilerini rozet ile birlikte dönme
+<h2>🏅 Rozet Hesaplama Mantığı</h2>
 
-Badge-Service’ten rozet bilgisi alma
-
-🟨 Action-Service 
-
-Kullanıcı aksiyonu oluşturma
-
-Kullanıcıya puan ekleme
-
-Outbox Pattern ile Kafka’ya action-events gönderme
-
-🟪 Badge-Service 
-
-Kafka action-events tüketme
-
-Kullanıcının toplam puanını User-Service’ten çekme
-
-Puan eşiklerine göre rozet hesaplama
-
-Kullanıcının rozetini güncelleme
-
-User-Service’e “badge updated” bildirimi gönderme
-
-🏅 Rozet Hesaplama Mantığı
+<pre><code>
 if (points >= 20) PLATINUM;
 else if (points >= 15) GOLD;
 else if (points >= 5)  SILVER;
 else                  BRONZE;
+</code></pre>
 
+<p>Her kullanıcı sistemde <b>yalnızca bir güncel rozet</b> taşır.</p>
 
-Her kullanıcı yalnızca bir güncel rozet taşır.
+<br/>
 
-📡 Event Akışı (Kısa Özet)
+<h2>📡 Event Akışı (Kısa Özet)</h2>
 
-Action-Service → Aksiyon oluşturur
+<ol>
+  <li>Action-Service: Aksiyon oluşturur</li>
+  <li>User-Service: Kullanıcıya puan ekler</li>
+  <li>Outbox: Kafka’ya event yollar</li>
+  <li>Badge-Service: Event’i dinler ve rozet belirler</li>
+  <li>Rozet DB’ye kaydedilir</li>
+  <li>User profil endpoint'i → rozet ile birlikte döner</li>
+</ol>
 
-User-Service → Kullanıcıya puan ekler
+<br/>
 
-Outbox → Kafka’ya event yollar
+<h2>🛠 Kullanılan Teknolojiler</h2>
 
-Badge-Service → Event'i tüketip rozet belirler
+<ul>
+  <li>Java 17</li>
+  <li>Spring Boot</li>
+  <li>Spring Cloud Stream (Kafka)</li>
+  <li>Feign Client</li>
+  <li>PostgreSQL</li>
+  <li>Docker Compose</li>
+</ul>
 
-Rozet DB’ye kaydedilir
-
-User profili → rozet ile döner
-
-🛠 Kullanılan Teknolojiler
-
-Java 21
-
-Spring Boot
-
-Spring Cloud Stream (Kafka)
-
-Feign Client
-
-PostgreSQL
-
-Docker Compose
+<br/>
