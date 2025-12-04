@@ -74,10 +74,10 @@ public class CreateActionService {
         }
 
         try {
-            // 3) Event'i JSON'a çevir
+            //Event'i JSON'a çevir
             String json = objectMapper.writeValueAsString(event);
 
-            // 4) Outbox'a kaydet
+            //Outbox'a kaydet
             ActionOutboxEntity outbox = new ActionOutboxEntity(
                     entity.getActionId(),
                     "ActionCreatedEvent",
