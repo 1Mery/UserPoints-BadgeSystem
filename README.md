@@ -82,7 +82,7 @@ else                  BRONZE;
 
 <h3>🔹 1. Kullanıcı Profilini Rozet ile Görüntüleme</h3>
 <p align="center">
-  <img src="C:\Users\EXCALIBUR\Pictures\Screenshots\Ekran görüntüsü 2025-12-04 094855.png" width="750" alt="User Profile Screenshot"/>
+  <img src="docs/postman-get-user.png" width="750" alt="User Profile Screenshot"/>
 </p>
 <p>
 Yukarıdaki örnekte, kullanıcının toplam 28 puana ulaştığı ve Badge-Service tarafından otomatik olarak <b>PLATINUM</b> rozeti atandığı görülmektedir.
@@ -92,7 +92,7 @@ Yukarıdaki örnekte, kullanıcının toplam 28 puana ulaştığı ve Badge-Serv
 
 <h3>🔹 2. Kullanıcıya Aksiyon Gönderme (Action-Service)</h3>
 <p align="center">
-  <img src="C:\Users\EXCALIBUR\Pictures\Screenshots\Ekran görüntüsü 2025-12-04 094802.png" width="750" alt="Create Action Screenshot"/>
+  <img src="docs/postman-create-action.png" width="750" alt="Create Action Screenshot"/>
 </p>
 <p>
 Bu istekte Action-Service başarılı şekilde action üretmiş, puanı hesaplamış ve User-Service'e iletmiştir. Ardından action, <b>Transactional Outbox Pattern</b> sayesinde Kafka'ya event olarak aktarılmıştır.
@@ -102,7 +102,7 @@ Bu istekte Action-Service başarılı şekilde action üretmiş, puanı hesaplam
 
 <h3>🔹 3. Transactional Outbox — Veritabanı Kayıtları</h3>
 <p align="center">
-  <img src="C:\Users\EXCALIBUR\Pictures\Screenshots\Ekran görüntüsü 2025-12-04 093950.png" width="900" alt="Outbox Table Screenshot"/>
+  <img src="docs/outbox-table.png" width="900" alt="Outbox Table Screenshot"/>
 </p>
 <p>
 Bu tablo, oluşturulan aksiyonların Kafka’ya gönderilmeden önce <code>action_outbox</code> tablosunda <b>SENT</b> durumuyla işlendiğini göstermektedir. Bu mekanizma, event-driven akışın veri tutarlılığını garanti eder.
