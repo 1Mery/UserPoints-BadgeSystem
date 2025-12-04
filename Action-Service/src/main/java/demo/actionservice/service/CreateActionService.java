@@ -88,7 +88,7 @@ public class CreateActionService {
 
         } catch (Exception e) {
             // JSON hatası olursa rollback
-            throw new IllegalStateException("Outbox kaydedilirken hata oluştu", e);
+            throw new IllegalStateException("Error to save outbox", e);
         }
 
         return mapper.toResponse(entity);
